@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saurabh Vairagade — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E1A;
+    --surface: #111827;
+    --surface2: #1A2235;
+    --teal: #0FD9A0;
+    --teal-dim: #0A9B72;
+    --teal-glow: rgba(15,217,160,0.12);
+    --text: #E8EDF5;
+    --text-muted: #7A8BA0;
+    --border: rgba(15,217,160,0.15);
+    --border-dim: rgba(255,255,255,0.06);
+    --mono: 'Space Mono', monospace;
+    --sans: 'Space Grotesk', sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,14,26,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-dim); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--teal); letter-spacing: 0.05em; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; transition: color 0.2s; letter-spacing: 0.03em; }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 100px 2rem 4rem; max-width: 1100px; margin: 0 auto; position: relative; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; width: 100%; }
+  .hero-tag { font-family: var(--mono); font-size: 12px; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 8px; }
+  .hero-tag::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--teal); }
+  .hero h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
+  .hero h1 span { color: var(--teal); }
+  .hero-desc { font-size: 16px; color: var(--text-muted); max-width: 440px; margin-bottom: 2rem; line-height: 1.8; }
+  .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn-primary { background: var(--teal); color: #040B12; font-family: var(--sans); font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.02em; transition: opacity 0.2s; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline { background: transparent; color: var(--teal); font-family: var(--sans); font-size: 13px; font-weight: 500; padding: 10px 22px; border-radius: 6px; border: 1px solid var(--teal); cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .btn-outline:hover { background: var(--teal-glow); }
+
+  /* HERO TERMINAL */
+  .terminal { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; font-family: var(--mono); }
+  .terminal-bar { background: var(--surface2); padding: 10px 14px; display: flex; align-items: center; gap: 7px; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot-r { background: #E24B4A; }
+  .dot-y { background: #EDA100; }
+  .dot-g { background: #1BAF7A; }
+  .terminal-body { padding: 1.25rem 1.5rem; font-size: 13px; line-height: 2; }
+  .t-line { display: flex; gap: 8px; }
+  .t-prompt { color: var(--teal); }
+  .t-cmd { color: var(--text); }
+  .t-out { color: var(--text-muted); padding-left: 16px; }
+  .t-green { color: #1BAF7A; }
+  .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--teal); animation: blink 1.1s infinite; vertical-align: middle; margin-left: 2px; }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+  /* STATS */
+  .stats-row { background: var(--surface); border-top: 1px solid var(--border-dim); border-bottom: 1px solid var(--border-dim); padding: 2rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; }
+  .stat { text-align: center; padding: 1rem; }
+  .stat-num { font-family: var(--mono); font-size: 2rem; font-weight: 700; color: var(--teal); }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; letter-spacing: 0.04em; }
+
+  /* SECTIONS */
+  section { max-width: 1100px; margin: 0 auto; padding: 5rem 2rem; }
+  .section-eyebrow { font-family: var(--mono); font-size: 11px; color: var(--teal); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .section-title { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+  .section-sub { color: var(--text-muted); font-size: 15px; margin-bottom: 3rem; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border-dim); border-radius: 8px; padding: 1rem 1.25rem; transition: border-color 0.2s; }
+  .skill-card:hover { border-color: var(--border); }
+  .skill-card-label { font-size: 11px; color: var(--teal); font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .skill-tag { font-size: 12px; background: var(--surface2); color: var(--text-muted); padding: 3px 9px; border-radius: 4px; }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .project-card { background: var(--surface); border: 1px solid var(--border-dim); border-radius: 10px; padding: 1.5rem; transition: border-color 0.25s, transform 0.25s; display: flex; flex-direction: column; }
+  .project-card:hover { border-color: var(--border); transform: translateY(-3px); }
+  .project-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1rem; }
+  .project-icon { width: 38px; height: 38px; border-radius: 8px; background: var(--teal-glow); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .project-badge { font-family: var(--mono); font-size: 10px; background: var(--teal-glow); color: var(--teal); padding: 3px 8px; border-radius: 4px; border: 1px solid var(--border); }
+  .project-name { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .project-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; flex: 1; margin-bottom: 1rem; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1rem; }
+  .stack-tag { font-size: 11px; font-family: var(--mono); color: var(--teal-dim); background: var(--teal-glow); padding: 2px 8px; border-radius: 3px; }
+  .project-link { font-size: 12px; color: var(--teal); text-decoration: none; font-family: var(--mono); display: flex; align-items: center; gap: 5px; margin-top: auto; }
+  .project-link:hover { text-decoration: underline; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .cert-card { background: var(--surface); border: 1px solid var(--border-dim); border-radius: 8px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: 12px; transition: border-color 0.2s; }
+  .cert-card:hover { border-color: var(--border); }
+  .cert-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-top: 7px; flex-shrink: 0; }
+  .cert-name { font-size: 13px; font-weight: 500; margin-bottom: 3px; }
+  .cert-issuer { font-size: 12px; color: var(--teal); font-family: var(--mono); }
+  .cert-date { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+
+  /* HACKATHONS */
+  .hack-list { display: flex; flex-direction: column; gap: 12px; }
+  .hack-item { background: var(--surface); border: 1px solid var(--border-dim); border-radius: 8px; padding: 1rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; transition: border-color 0.2s; }
+  .hack-item:hover { border-color: var(--border); }
+  .hack-num { font-family: var(--mono); font-size: 11px; color: var(--teal); min-width: 28px; }
+  .hack-name { font-size: 14px; font-weight: 500; }
+  .hack-org { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .hack-date { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+
+  /* EXPERIENCE */
+  .exp-list { display: flex; flex-direction: column; gap: 16px; }
+  .exp-card { background: var(--surface); border: 1px solid var(--border-dim); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 1.25rem 1.5rem; }
+  .exp-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+  .exp-title { font-size: 15px; font-weight: 600; }
+  .exp-org { font-size: 13px; color: var(--teal); font-family: var(--mono); }
+  .exp-date { font-size: 12px; color: var(--text-muted); font-family: var(--mono); text-align: right; }
+  .exp-bullets { list-style: none; margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
+  .exp-bullets li { font-size: 13px; color: var(--text-muted); line-height: 1.6; display: flex; gap: 8px; }
+  .exp-bullets li::before { content: '›'; color: var(--teal); flex-shrink: 0; }
+
+  /* CONTACT */
+  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 3rem; text-align: center; }
+  .contact-box h2 { font-size: 2rem; font-weight: 600; margin-bottom: 0.75rem; }
+  .contact-box p { color: var(--text-muted); margin-bottom: 2rem; }
+  .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; }
+  .contact-link { display: flex; align-items: center; gap: 8px; background: var(--surface2); border: 1px solid var(--border-dim); border-radius: 6px; padding: 10px 18px; text-decoration: none; color: var(--text); font-size: 13px; transition: border-color 0.2s, color 0.2s; }
+  .contact-link:hover { border-color: var(--teal); color: var(--teal); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border-dim); padding: 2rem; text-align: center; font-size: 12px; color: var(--text-muted); font-family: var(--mono); }
+
+  /* DIVIDER */
+  .section-divider { border: none; border-top: 1px solid var(--border-dim); max-width: 1100px; margin: 0 auto; }
+
+  @media (max-width: 768px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .stats-row { grid-template-columns: repeat(2,1fr); }
+    .nav-links { display: none; }
+    .hack-item { flex-wrap: wrap; }
+    .hack-date { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">saurabh.dev</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certs">Certifications</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="max-width:1100px; margin:0 auto; padding: 100px 2rem 0;">
+  <div class="hero-grid">
+    <div>
+      <div class="hero-tag">Available for internships</div>
+      <h1>Saurabh<br><span>Vairagade</span></h1>
+      <p class="hero-desc">BCA student specialising in Cybersecurity. Full-stack developer with 4 real projects, 16 industry credentials, and 5 national hackathons — all in year two.</p>
+      <div class="hero-btns">
+        <a href="#projects" class="btn-primary">View projects</a>
+        <a href="#contact" class="btn-outline">Get in touch</a>
+      </div>
+    </div>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">~$</span><span class="t-cmd"> whoami</span></div>
+        <div class="t-out t-green">saurabh_vairagade</div>
+        <div class="t-line"><span class="t-prompt">~$</span><span class="t-cmd"> cat stack.txt</span></div>
+        <div class="t-out">Node.js · React · Python · MySQL</div>
+        <div class="t-out">AWS · GCP · Groq API · Git</div>
+        <div class="t-line"><span class="t-prompt">~$</span><span class="t-cmd"> cat certs.txt</span></div>
+        <div class="t-out">NVIDIA AI · AWS Cloud · Mastercard</div>
+        <div class="t-out">Tata iQ · Deloitte · TCS · +10 more</div>
+        <div class="t-line"><span class="t-prompt">~$</span><span class="t-cmd"> ls hackathons/</span></div>
+        <div class="t-out t-green">ARTIFICIX · RisingIndia · Enigma2.0</div>
+        <div class="t-out t-green">Techtonix · Datathon</div>
+        <div class="t-line"><span class="t-prompt">~$</span><span class="t-cmd"> <span class="t-cursor"></span></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row" style="margin-top: 4rem;">
+  <div class="stat"><div class="stat-num">4</div><div class="stat-label">Real projects</div></div>
+  <div class="stat"><div class="stat-num">16</div><div class="stat-label">Credentials</div></div>
+  <div class="stat"><div class="stat-num">5</div><div class="stat-label">Hackathons</div></div>
+  <div class="stat"><div class="stat-num">7.85</div><div class="stat-label">CGPA</div></div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-eyebrow">Technical skills</div>
+  <h2 class="section-title">What I work with</h2>
+  <p class="section-sub">Built through real projects, not just coursework.</p>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-card-label">Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Java</span><span class="skill-tag">C++</span><span class="skill-tag">PHP</span><span class="skill-tag">C</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Web</div>
+      <div class="skill-tags">
+        <span class="skill-tag">React</span><span class="skill-tag">Node.js</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span><span class="skill-tag">Express.js</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">AI / Data</div>
+      <div class="skill-tags">
+        <span class="skill-tag">Groq API</span><span class="skill-tag">GenAI</span><span class="skill-tag">EDA</span><span class="skill-tag">Predictive Modeling</span><span class="skill-tag">Jetson Nano</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Cloud & DevOps</div>
+      <div class="skill-tags">
+        <span class="skill-tag">AWS</span><span class="skill-tag">Google Cloud</span><span class="skill-tag">Elastic Beanstalk</span><span class="skill-tag">Git</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Database</div>
+      <div class="skill-tags">
+        <span class="skill-tag">MySQL</span><span class="skill-tag">MongoDB</span><span class="skill-tag">RDBMS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-card-label">Cybersecurity</div>
+      <div class="skill-tags">
+        <span class="skill-tag">IAM</span><span class="skill-tag">Threat Detection</span><span class="skill-tag">Phishing Sim</span><span class="skill-tag">Log Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-eyebrow">Projects</div>
+  <h2 class="section-title">Things I've built</h2>
+  <p class="section-sub">4 real projects — all with working code on GitHub.</p>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🤖</div>
+        <span class="project-badge">Hackathon</span>
+      </div>
+      <div class="project-name">AI-Powered Personalized Tutor</div>
+      <div class="project-desc">Real-time adaptive tutoring platform using Python and Groq API. Reduced query response time by ~60% with subject-specific prompt templates across 3 domains — built in 24 hours at ARTIFICIX 2K26.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span><span class="stack-tag">Groq API</span><span class="stack-tag">Prompt Eng.</span>
+      </div>
+      <a href="https://github.com/saurabhvairagade15-oss/ai-tutor-groq" class="project-link" target="_blank">→ github.com/saurabhvairagade15-oss</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🏥</div>
+        <span class="project-badge">Full-stack</span>
+      </div>
+      <div class="project-name">Hospital Bed Allocation System</div>
+      <div class="project-desc">Emergency management system tracking 20+ beds across 4 departments in real time. Auto-allocates nearest available bed, reducing manual decision time by ~70%.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Node.js</span><span class="stack-tag">MySQL</span><span class="stack-tag">JavaScript</span>
+      </div>
+      <a href="https://github.com/saurabhvairagade15-oss/hospital-bed-allocation" class="project-link" target="_blank">→ github.com/saurabhvairagade15-oss</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🍽️</div>
+        <span class="project-badge">Full-stack</span>
+      </div>
+      <div class="project-name">Orderly.io — Restaurant System</div>
+      <div class="project-desc">Full-stack restaurant order management covering 3 user roles (waiter, kitchen, admin). Real-time order routing with under 1-second latency, reducing table turnaround time by ~40%.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Node.js</span><span class="stack-tag">Express</span><span class="stack-tag">MySQL</span><span class="stack-tag">HTML/CSS</span>
+      </div>
+      <a href="https://github.com/saurabhvairagade15-oss/Order-management-system" class="project-link" target="_blank">→ github.com/saurabhvairagade15-oss</a>
+    </div>
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-icon">🧪</div>
+        <span class="project-badge">Hackathon</span>
+      </div>
+      <div class="project-name">ML Learning Sandbox</div>
+      <div class="project-desc">Interactive simulator visualising core ML algorithms (regression, classification, clustering) step by step with real-time controls. Built at Enigma 2.0, YCCE Nagpur.</div>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span><span class="stack-tag">JavaScript</span><span class="stack-tag">Chart.js</span>
+      </div>
+      <a href="https://github.com/saurabhvairagade15-oss/ml-learning-sandbox" class="project-link" target="_blank">→ github.com/saurabhvairagade15-oss</a>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CERTIFICATIONS -->
+<section id="certs">
+  <div class="section-eyebrow">Certifications</div>
+  <h2 class="section-title">16 industry credentials</h2>
+  <p class="section-sub">From NVIDIA, AWS, Mastercard, Tata, Deloitte, HP and more.</p>
+  <div class="certs-grid">
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">GenAI Powered Data Analytics Simulation</div><div class="cert-issuer">Tata Group (Tata iQ) via Forage</div><div class="cert-date">May 2026</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Getting Started with AI on Jetson Nano</div><div class="cert-issuer">NVIDIA — Certificate of Competency</div><div class="cert-date">June 2026</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">AWS Cloud Practitioner Essentials</div><div class="cert-issuer">Amazon Web Services</div><div class="cert-date">June 2026</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Cybersecurity Job Simulation</div><div class="cert-issuer">Mastercard via Forage</div><div class="cert-date">June 2026</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Cybersecurity Security Analyst Simulation</div><div class="cert-issuer">Tata Consultancy Services via Forage</div><div class="cert-date">Aug 2025</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Cyber Security Job Simulation</div><div class="cert-issuer">Deloitte Australia via Forage</div><div class="cert-date">Aug 2025</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">AWS APAC Solutions Architecture</div><div class="cert-issuer">Amazon Web Services via Forage</div><div class="cert-date">Aug 2025</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">AI for Beginners</div><div class="cert-issuer">HP LIFE — HP Foundation</div><div class="cert-date">Dec 2025</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Data Science and Analytics</div><div class="cert-issuer">HP LIFE — HP Foundation</div><div class="cert-date">Jan 2026</div></div></div>
+    <div class="cert-card"><div class="cert-dot"></div><div><div class="cert-name">Introduction to Cybersecurity Awareness</div><div class="cert-issuer">HP LIFE — HP Foundation</div><div class="cert-date">Jan 2026</div></div></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- HACKATHONS -->
+<section>
+  <div class="section-eyebrow">Competitions</div>
+  <h2 class="section-title">5 hackathons and datathons</h2>
+  <p class="section-sub">All national-level, all in the last year.</p>
+  <div class="hack-list">
+    <div class="hack-item"><span class="hack-num">01</span><div><div class="hack-name">ARTIFICIX 2K26 — National Level AI Tech Fest</div><div class="hack-org">GH Raisoni College of Engineering · IEEE Bombay Section</div></div><span class="hack-date">Apr 2026</span></div>
+    <div class="hack-item"><span class="hack-num">02</span><div><div class="hack-name">Rising India Hackathon 1.0</div><div class="hack-org">Nagpur Institute of Technology · Team Apex</div></div><span class="hack-date">Apr 2026</span></div>
+    <div class="hack-item"><span class="hack-num">03</span><div><div class="hack-name">Enigma 2.0 — YASH 26.0</div><div class="hack-org">Yeshwantrao Chavan College of Engineering · IEEE Computer Society</div></div><span class="hack-date">Feb 2026</span></div>
+    <div class="hack-item"><span class="hack-num">04</span><div><div class="hack-name">Techtonix Hackathon</div><div class="hack-org">Government Polytechnic Nagpur · Dept. of Computer Engineering</div></div><span class="hack-date">2025–26</span></div>
+    <div class="hack-item"><span class="hack-num">05</span><div><div class="hack-name">Datathon — AI GenX Club</div><div class="hack-org">GH Raisoni Skill Tech University</div></div><span class="hack-date">Feb 2026</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-eyebrow">Experience</div>
+  <h2 class="section-title">Where I've worked</h2>
+  <p class="section-sub">Real roles with real business impact.</p>
+  <div class="exp-list">
+    <div class="exp-card">
+      <div class="exp-top">
+        <div><div class="exp-title">Social Media Operator</div><div class="exp-org">Tarang Solar Systems</div></div>
+        <div class="exp-date">Oct 2025 – Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Increased customer engagement by ~35% and generated 50+ monthly leads through branded content and solar incentive campaigns.</li>
+        <li>Managed branding, content production, and hiring across 3 functions simultaneously, cutting campaign launch time by ~30%.</li>
+      </ul>
+    </div>
+    <div class="exp-card">
+      <div class="exp-top">
+        <div><div class="exp-title">Lead Content Creator</div><div class="exp-org">Dhanvl Vlogs</div></div>
+        <div class="exp-date">Mar 2026 – Present</div>
+      </div>
+      <ul class="exp-bullets">
+        <li>Produced and edited 10+ technical and lifestyle videos focused on skill acquisition, using advanced video editing to communicate complex topics accessibly.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <div class="section-eyebrow" style="justify-content:center; display:flex; margin-bottom:0.75rem;">Let's connect</div>
+    <h2>Open to internships</h2>
+    <p>Looking for developer or cybersecurity internship opportunities.<br>Based in Nagpur, Maharashtra — open to remote.</p>
+    <div class="contact-links">
+      <a href="mailto:saurabhvairagade15@gmail.com" class="contact-link">✉ saurabhvairagade15@gmail.com</a>
+      <a href="https://github.com/saurabhvairagade15-oss" class="contact-link" target="_blank">⌥ GitHub</a>
+      <a href="tel:+919673195235" class="contact-link">✆ +91-9673195235</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Saurabh Vairagade · BCA (Cybersecurity) · GH Raisoni Skill Tech University, Nagpur · 2024–2027</p>
+</footer>
+
+</body>
+</html>
